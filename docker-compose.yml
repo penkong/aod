@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mongo:
+    # sudo docker run --name db -p 27017:27017 -d mongo
+    # you can use mongo container if you are not ok with docker-compose
+    image: 'mongo:latest'
+    environment:
+      - DATABASE_PASSWORD=12
+  api:
+    depends_on:
+      - mongo
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    volumes:
+      - /app/node_modules
+      - ./:/app
+    environment:
+      - STH_KEY=barevdzez
+      - DATABASE_PASSWORD=12
+      - MONGO_URI=MONGO_URI
